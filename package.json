@@ -1,0 +1,31 @@
+{
+  "name": "creative_programming_projects",
+  "version": "0.1.0",
+  "description": "A project of building self-controlled agent system with LangGraph",
+  "private": true,
+  "keywords": [],
+  "author": "Reo Hitomi",
+  "license": "ISC",
+  "type": "module",
+  "testEnvironment": "node",
+  "scripts": {
+    "build": "tsc",
+    "preinstall": "typesync || :"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.0.50",
+    "@langchain/core": "^0.1.58",
+    "@langchain/google-genai": "^0.0.11",
+    "@langchain/google-vertexai": "^0.0.11",
+    "@langchain/openai": "^0.0.28",
+    "langchain": "^0.1.33"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "typesync": "^0.12.1"
+  },
+  "resolutions": {
+    "@langchain/core": "^0.1.54"
+  }
+}
