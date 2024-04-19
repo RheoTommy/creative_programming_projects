@@ -1,7 +1,5 @@
 import {ChatOpenAI} from "@langchain/openai";
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {ChatPromptTemplate, PromptTemplate} from "@langchain/core/prompts";
-import {StringOutputParser} from "@langchain/core/output_parsers";
 
 const gpt = new ChatOpenAI({
     temperature: 0.6,
@@ -13,16 +11,17 @@ const gemini = new ChatGoogleGenerativeAI({
     model: "gemini-pro",
 })
 
-const prompt = ChatPromptTemplate.fromMessages(["1/n の確率の事象を n 回繰り返したときに、少なくとも一度は事象が起こる確率を求めてください。また、これを n についてグラフ化するプログラムを R で作成してください。"]);
+const question = "確率 1/n の事象を n 回繰り返し試行したとき、一度もその事象が起こらない確率を求め、定式化してください。また、これを n についてのグラフとして Python を用いて描画してください。"
 
-prompt.pipe(gemini).pipe()
-const chains = [gpt, gemini].map(model => prompt.pipe(model).pipe(new StringOutputParser()));
 
-for (const chain of chains) {
-    const res = await chain.stream({});
-    for await (const chunk of res) {
-        process.stdout.write(chunk);
-    }
-    console.log();
+for await (const chunk of await gpt.stream(question)) {
+    process.stdout.write(chunk.content.toString());
 }
+console.log()
 
+console.log("--------------------")
+
+for await (const chunk of await gemini.stream(question)) {
+    process.stdout.write(chunk.content.toString());
+}
+console.log()
