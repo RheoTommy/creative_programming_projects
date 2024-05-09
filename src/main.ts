@@ -1,12 +1,7 @@
 import {ChatOpenAI} from "@langchain/openai";
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
 
-const streamToConsole = async (stream: AsyncGenerator<Buffer, void, unknown>) => {
-    for await (const chunk of stream) {
-        process.stdout.write(chunk.toString());
-    }
-    console.log("");
-}
+
 
 const gpt = new ChatOpenAI({
     temperature: 0.6,

@@ -10,7 +10,8 @@
   "testEnvironment": "node",
   "scripts": {
     "build": "tsc",
-    "preinstall": "typesync || :"
+    "preinstall": "typesync || :",
+    "test": "jest"
   },
   "dependencies": {
     "@langchain/community": "^0.0.55",
@@ -18,6 +19,7 @@
     "@langchain/google-genai": "^0.0.12",
     "@langchain/google-vertexai": "^0.0.14",
     "@langchain/openai": "^0.0.28",
+    "duck-duck-scrape": "^2.2.5",
     "langchain": "^0.1.36"
   },
   "devDependencies": {
