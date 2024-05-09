@@ -1,4 +1,4 @@
-import {gemini, gpt4} from "./models.js";
+import {gemini, gpt4, gpt_embedding} from "./models.js";
 import {streamToConsole} from "./utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool} from "./tools.js";
@@ -20,6 +20,14 @@ const streamingModels = async () => {
     await streamToConsole(res_gemini);
 }
 
+const callingEmbeddings = async () => {
+    const res = await gpt_embedding.embedQuery("Hello, how are you?");
+    console.log(res);
+
+    const res2 = await gpt_embedding.embedQuery("Hello, how are you?");
+    console.log(res2);
+}
+
 const ddgSearch = async () => {
     const res = await searchTool.invoke("TypeScript in FP")
     console.log(res);
@@ -32,5 +40,6 @@ const printTaskList = () => {
 
 // await callingModels();
 // await streamingModels();
+// await callingEmbeddings();
 // await ddgSearch();
-printTaskList()
+// printTaskList()
