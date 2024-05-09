@@ -2,6 +2,7 @@ import {gemini, gpt4} from "./models.js";
 import {streamToConsole} from "./utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool} from "./tools.js";
+import {loadTaskList} from "./loadTaskList.js";
 
 const callingModels = async () => {
     const res_gpt = await gpt4.invoke("Hello, how are you?");
@@ -24,6 +25,12 @@ const ddgSearch = async () => {
     console.log(res);
 }
 
+const printTaskList = () => {
+    const tasks = loadTaskList();
+    console.log(tasks);
+}
+
 // await callingModels();
 // await streamingModels();
-await ddgSearch();
+// await ddgSearch();
+printTaskList()

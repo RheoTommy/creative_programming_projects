@@ -20,9 +20,11 @@
     "@langchain/google-vertexai": "^0.0.14",
     "@langchain/openai": "^0.0.28",
     "duck-duck-scrape": "^2.2.5",
+    "js-yaml": "^4.1.0",
     "langchain": "^0.1.36"
   },
   "devDependencies": {
+    "@types/js-yaml": "~4.0.9",
     "@types/node": "^20.12.11",
     "typescript": "^5.4.5",
     "typesync": "^0.12.1"
