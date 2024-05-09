@@ -6,5 +6,3 @@ export const streamToConsole = async <T>(stream: IterableReadableStream<T>) => {
     }
     console.log("");
 }
-
-// export const
