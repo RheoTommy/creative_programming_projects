@@ -13,15 +13,15 @@
     "preinstall": "typesync || :"
   },
   "dependencies": {
-    "@langchain/community": "^0.0.53",
-    "@langchain/core": "^0.1.61",
+    "@langchain/community": "^0.0.55",
+    "@langchain/core": "^0.1.62",
     "@langchain/google-genai": "^0.0.12",
-    "@langchain/google-vertexai": "^0.0.11",
+    "@langchain/google-vertexai": "^0.0.14",
     "@langchain/openai": "^0.0.28",
     "langchain": "^0.1.36"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.11",
     "typescript": "^5.4.5",
     "typesync": "^0.12.1"
   },
