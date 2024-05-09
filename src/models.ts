@@ -1,5 +1,5 @@
 import {ChatOpenAI, OpenAIEmbeddings} from "@langchain/openai";
-import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
+import {ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings} from "@langchain/google-genai";
 
 export const gpt4 = new ChatOpenAI({
     temperature: 0.6,
@@ -13,7 +13,7 @@ export const gemini = new ChatGoogleGenerativeAI({
 
 export const gpt_embedding = new OpenAIEmbeddings();
 
-export const gemini_embedding = new ChatGoogleGenerativeAI({
-    model: "\tmodels/embedding-001",
+export const gemini_embedding = new GoogleGenerativeAIEmbeddings({
+    model: "models/embedding-001",
 });
 
