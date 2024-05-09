@@ -3,6 +3,7 @@ import {streamToConsole} from "./utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool} from "./tools.js";
 import {loadTaskList} from "./loadTaskList.js";
+import {autoGpt} from "./agents.js";
 
 const callingModels = async () => {
     const res_gpt = await gpt4.invoke("Hello, how are you?");
@@ -38,8 +39,14 @@ const printTaskList = () => {
     console.log(tasks);
 }
 
+const runAutoGpt = async () => {
+    const res = await autoGpt.run(["Hello, how are you?"]);
+    console.log(res)
+}
+
 // await callingModels();
 // await streamingModels();
 // await callingEmbeddings();
 // await ddgSearch();
 // printTaskList()
+runAutoGpt()

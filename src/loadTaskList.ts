@@ -1,4 +1,3 @@
-// Define a type for the content of the YAML file
 import * as fs from "node:fs";
 import yaml from "js-yaml"
 
