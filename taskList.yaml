@@ -1,0 +1,16 @@
+# Simplest task list. Must be responded to the client without calling tools.
+# The agent should respond as fast as normal chat models do.
+simplest-questions: [
+  "Tell me about what Functional Programming is.",
+  "Make a guide on how to develop an application using TypeScript in FP style. This guide is for Rust developers so please show tips for strict type safe programming.",
+]
+
+# Easy task with calling single tool.
+single-task: [
+  "Research about the best practices for developing an application in FP style. Also show examples of TypeScript and Haskell code. Don't forget to cite the sources.",
+]
+
+# Complex task with calling multiple tools.
+complex-task: [
+  "What's the top 5 liked programming language in 2023 referring to StackOverFlow survey? When you find the list, please visit each language's official website and get information about the language's features. Finally, write a document written in Markdown format that shows comparison of the languages."
+]
