@@ -82,7 +82,7 @@ export const createMdFiles = async () => {
         task: string;
         taskType: string;
         index: number;
-        agent: string;
+        agentName: string;
         res: string;
     }[]
         = JSON.parse(fs);
@@ -96,5 +96,5 @@ export const createMdFiles = async () => {
 // await ddgSearch();
 // printTaskList()
 // await runAutoGpt()
-await runComparison()
+// await runComparison()
 await createMdFiles()

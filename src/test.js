@@ -74,6 +74,6 @@ export const createMdFiles = async () => {
 // await ddgSearch();
 // printTaskList()
 // await runAutoGpt()
-await runComparison();
+// await runComparison()
 await createMdFiles();
 //# sourceMappingURL=test.js.map
