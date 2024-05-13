@@ -54,20 +54,15 @@ const runAutoGpt = async () => {
 }
 
 const runComparison = async () => {
+    // TODO: can't get logs from AutoGPT.run()
     const agents = [{
         agent: (question: string) => gemini.pipe(new StringOutputParser()).invoke(question), agentName: "Gemini-1.5-Pro"
     }, {
         agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4-Turbo"
-    }, // {
-        //     agent: async (question: string) => (await geminiExecutor.invoke({input: question}))["output"] as string,
-        //     agentName: "Gemini-1.5-Pro-Executor"
-        // },
-        {
-            agent: async (question: string) => (await gpt4Executor.invoke({input: question}))["output"] as string,
-            agentName: "GPT-4-Turbo-Executor"
-        }, {
-            agent: async (question: string) => await autoGpt.run([question]) as string, agentName: "AutoGPT"
-        }];
+    }, {
+        agent: async (question: string) => (await gpt4Executor.invoke({input: question}))["output"] as string,
+        agentName: "GPT-4-Turbo-Executor"
+    }];
 
     const res = await executeComparison(agents, true);
 
@@ -90,8 +85,5 @@ export const createMdFiles = async () => {
 // await webBrowse();
 // printTaskList()
 // await runAutoGpt()
-// await runComparison()
-// await createMdFiles()
-
-// const res = await autoGpt.run(["What's the top 5 liked programming language in 2023 referring to StackOverFlow survey? When you find the list, please visit each language's official website and get information about the language's features. Finally, write a document written in Markdown format that shows comparison of the languages."]);
-// console.log(res)
+await runComparison()
+await createMdFiles()

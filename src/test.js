@@ -43,19 +43,14 @@ const runAutoGpt = async () => {
     console.log(res);
 };
 const runComparison = async () => {
+    // TODO: can't get logs from AutoGPT.run()
     const agents = [{
             agent: (question) => gemini.pipe(new StringOutputParser()).invoke(question), agentName: "Gemini-1.5-Pro"
         }, {
             agent: (question) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4-Turbo"
-        }, // {
-        //     agent: async (question: string) => (await geminiExecutor.invoke({input: question}))["output"] as string,
-        //     agentName: "Gemini-1.5-Pro-Executor"
-        // },
-        {
+        }, {
             agent: async (question) => (await gpt4Executor.invoke({ input: question }))["output"],
             agentName: "GPT-4-Turbo-Executor"
-        }, {
-            agent: async (question) => await autoGpt.run([question]), agentName: "AutoGPT"
         }];
     const res = await executeComparison(agents, true);
     writeFileSync("../comparison.json", JSON.stringify(res, null, 2));
@@ -72,8 +67,6 @@ export const createMdFiles = async () => {
 // await webBrowse();
 // printTaskList()
 // await runAutoGpt()
-// await runComparison()
-// await createMdFiles()
-// const res = await autoGpt.run(["What's the top 5 liked programming language in 2023 referring to StackOverFlow survey? When you find the list, please visit each language's official website and get information about the language's features. Finally, write a document written in Markdown format that shows comparison of the languages."]);
-// console.log(res)
+await runComparison();
+await createMdFiles();
 //# sourceMappingURL=test.js.map

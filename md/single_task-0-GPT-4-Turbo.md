@@ -7,80 +7,86 @@
 
 # Response
 
-Functional Programming (FP) is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data. It emphasizes the application of functions, in contrast to the imperative programming style, which emphasizes changes in state.
+Functional Programming (FP) is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data. It emphasizes the application of functions, in contrast to the imperative programming style, which emphasizes changes in state. Here are some best practices for developing an application in FP style, with examples in TypeScript (a superset of JavaScript that includes static types) and Haskell (a standardized pure functional programming language).
 
-### Best Practices for Developing an Application in FP Style
+### Best Practices for Functional Programming
 
-1. **Immutability**: Avoid changing variables or object states after they have been created. Instead, use functions to return new objects with the updated state.
+1. **Immutability**: Avoid mutating data. Use immutable data structures and pure functions that return new data instead of altering the original data.
 
-2. **Pure Functions**: Ensure functions have no side effects, which means the same inputs will always result in the same outputs, and there are no changes or interactions with anything outside the function.
+2. **Pure Functions**: Ensure that your functions are pure. This means functions should have no side effects (such as modifying global variables or I/O operations) and the same input should always return the same output.
 
-3. **Higher-Order Functions**: Utilize functions that take other functions as arguments or return them as results. This helps in creating modular, reusable code.
+3. **Function Composition**: Build complex operations out of simpler functions. This enhances code reusability and testability.
 
-4. **Recursion Over Looping**: Prefer using recursion for repeated or looping operations, as it fits well with the statelessness of functional programming.
+4. **Higher-Order Functions**: Use functions that take other functions as arguments or return functions as results. This is useful for creating utility functions that can be more dynamic and adaptable to different situations.
 
-5. **Function Composition**: Build complex operations by composing multiple functions, often leading to more readable and maintainable code.
+5. **Type Systems**: Leverage the type systems in TypeScript and Haskell to make illegal states unrepresentable and improve the robustness of your code through compile-time checks.
 
-6. **Type Systems**: Leverage the type systems in functional languages for better code safety and clarity. This includes using algebraic data types and type inference where applicable.
+6. **Recursion Over Iteration**: Prefer recursion over traditional looping constructs. Many functional languages optimize recursion and can handle it more efficiently than imperative loops.
 
-7. **Lazy Evaluation**: Use lazy evaluation to improve performance, particularly in handling large datasets or complex algorithms, by delaying computation until it's actually necessary.
+7. **Lazy Evaluation**: Use lazy evaluation to defer computation until necessary, which can lead to performance improvements and the ability to create infinite data structures.
 
-8. **Referential Transparency**: Ensure that functions are referentially transparent, i.e., they can be replaced with their corresponding values without changing the program's behavior.
+8. **Avoiding Nulls**: Instead of using null or other similar constructs, use types like `Option` or `Maybe` which explicitly handle the absence of value.
 
-### Examples in TypeScript and Haskell
+### Examples
 
 #### TypeScript Example
 
-TypeScript supports functional programming styles, leveraging its powerful type system. Here’s how you might implement a simple task using FP principles in TypeScript:
+Here’s a simple example in TypeScript showing immutability, pure functions, and higher-order functions:
 
 ```typescript
-// Immutable data structure
-type Person = {
-    name: string;
-    age: number;
+type Book = {
+    title: string,
+    author: string,
+    year: number
 };
 
-// Pure function to increment age
-const birthday = (person: Person): Person => ({
-    ...person,
-    age: person.age + 1
-});
+const books: Book[] = [
+    { title: "Functional Programming", author: "John Doe", year: 2021 },
+    { title: "Advanced TypeScript", author: "Jane Doe", year: 2019 }
+];
 
-// Example usage
-const person: Person = { name: "Alice", age: 30 };
-const olderPerson = birthday(person);
+// Pure function to filter books by year
+const booksAfterYear = (bookList: Book[], year: number): Book[] =>
+    bookList.filter(book => book.year > year);
 
-console.log(olderPerson); // { name: "Alice", age: 31 }
-console.log(person); // { name: "Alice", age: 30 }
+// Using the function
+const recentBooks = booksAfterYear(books, 2020);
+console.log(recentBooks);
 ```
 
 #### Haskell Example
 
-Haskell is a purely functional programming language, which naturally enforces many FP best practices. Here’s the equivalent functionality in Haskell:
+This example in Haskell demonstrates immutability, pure functions, and recursion:
 
 ```haskell
--- Define a data type for Person
-data Person = Person { name :: String, age :: Int } deriving (Show)
+data Book = Book {
+    title :: String,
+    author :: String,
+    year :: Int
+} deriving (Show)
 
--- Pure function to increment age
-birthday :: Person -> Person
-birthday (Person name age) = Person name (age + 1)
+books :: [Book]
+books = [
+    Book "Functional Programming" "John Doe" 2021,
+    Book "Advanced Haskell" "Jane Doe" 2019
+    ]
 
--- Example usage
+-- Pure function to filter books by year
+booksAfterYear :: [Book] -> Int -> [Book]
+booksAfterYear [] _ = []
+booksAfterYear (b:bs) year
+    | year < year b = b : booksAfterYear bs year
+    | otherwise = booksAfterYear bs year
+
+-- Using the function
 main :: IO ()
-main = do
-    let person = Person "Alice" 30
-    let olderPerson = birthday person
-    print olderPerson -- Person {name = "Alice", age = 31}
-    print person -- Person {name = "Alice", age = 30}
+main = print $ booksAfterYear books 2020
 ```
 
 ### Sources
 
-The best practices and examples provided are based on general knowledge of functional programming principles and specific features of TypeScript and Haskell. Key references include:
+1. "Mostly adequate guide to FP (in javascript)" by Brian Lonsdorf (https://mostly-adequate.gitbooks.io/mostly-adequate-guide/)
+2. "Learn You a Haskell for Great Good!" by Miran Lipovača (http://learnyouahaskell.com/)
+3. "Programming TypeScript" by Boris Cherny (https://www.oreilly.com/library/view/programming-typescript/9781492037644/)
 
-- Haskell Programming from First Principles by Christopher Allen and Julie Moronuki
-- TypeScript documentation from Microsoft (https://www.typescriptlang.org/docs/)
-- Real World Haskell by Bryan O'Sullivan, Don Stewart, and John Goerzen
-
-These sources provide a deeper understanding of functional programming concepts and their application in Haskell and TypeScript.
+These sources provide an in-depth look at functional programming concepts applicable across different languages, including Haskell and TypeScript. They also offer practical advice and examples to help grasp the concepts effectively.
