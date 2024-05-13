@@ -1,7 +1,7 @@
 import {gemini, gpt4, gpt_embedding} from "./models.js";
 import {executeComparison, streamToConsole} from "./utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
-import {searchTool} from "./tools.js";
+import {searchTool, webBrowser} from "./tools.js";
 import {loadTaskList} from "./loadTaskList.js";
 import {autoGpt, gpt4Executor} from "./agents.js";
 import {writeFileSync} from "node:fs";
@@ -37,6 +37,12 @@ const ddgSearch = async () => {
     console.log(res);
 }
 
+const webBrowse = async () => {
+    const url = "https://js.langchain.com/docs/integrations/tools/webbrowser";
+    const res = await webBrowser.invoke(url);
+    console.log(res);
+}
+
 const printTaskList = () => {
     const tasks = loadTaskList();
     console.log(tasks);
@@ -48,28 +54,20 @@ const runAutoGpt = async () => {
 }
 
 const runComparison = async () => {
-    const agents = [
-        {
-            agent: (question: string) => gemini.pipe(new StringOutputParser()).invoke(question),
-            agentName: "Gemini-1.5-Pro"
-        },
-        {
-            agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question),
-            agentName: "GPT-4-Turbo"
-        },
-        // {
+    const agents = [{
+        agent: (question: string) => gemini.pipe(new StringOutputParser()).invoke(question), agentName: "Gemini-1.5-Pro"
+    }, {
+        agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4-Turbo"
+    }, // {
         //     agent: async (question: string) => (await geminiExecutor.invoke({input: question}))["output"] as string,
         //     agentName: "Gemini-1.5-Pro-Executor"
         // },
         {
             agent: async (question: string) => (await gpt4Executor.invoke({input: question}))["output"] as string,
             agentName: "GPT-4-Turbo-Executor"
-        },
-        {
-            agent: async (question: string) => await autoGpt.run([question]) as string,
-            agentName: "AutoGPT"
-        }
-    ];
+        }, {
+            agent: async (question: string) => await autoGpt.run([question]) as string, agentName: "AutoGPT"
+        }];
 
     const res = await executeComparison(agents, true);
 
@@ -79,13 +77,8 @@ const runComparison = async () => {
 export const createMdFiles = async () => {
     const fs = readFileSync("../comparison.json", "utf-8");
     const data: {
-        task: string;
-        taskType: string;
-        index: number;
-        agentName: string;
-        res: string;
-    }[]
-        = JSON.parse(fs);
+        task: string; taskType: string; index: number; agentName: string; res: string;
+    }[] = JSON.parse(fs);
 
     data.forEach(res => resToMdFile(res));
 }
@@ -94,7 +87,11 @@ export const createMdFiles = async () => {
 // await streamingModels();
 // await callingEmbeddings();
 // await ddgSearch();
+// await webBrowse();
 // printTaskList()
 // await runAutoGpt()
 // await runComparison()
-await createMdFiles()
+// await createMdFiles()
+
+// const res = await autoGpt.run(["What's the top 5 liked programming language in 2023 referring to StackOverFlow survey? When you find the list, please visit each language's official website and get information about the language's features. Finally, write a document written in Markdown format that shows comparison of the languages."]);
+// console.log(res)

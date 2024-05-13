@@ -1,8 +1,8 @@
 import {InMemoryFileStore} from "langchain/stores/file/in_memory";
-import {searchTool} from "./tools.js";
+import {searchTool, webBrowser} from "./tools.js";
 import {ReadFileTool, WriteFileTool} from "langchain/tools";
 import {MemoryVectorStore} from "langchain/vectorstores/memory";
-import {gemini, gpt4, gpt_embedding} from "./models.js";
+import {gpt4, gpt_embedding} from "./models.js";
 import {AutoGPT} from "langchain/experimental/autogpt";
 import {AgentExecutor, createToolCallingAgent} from "langchain/agents";
 import {ChatPromptTemplate} from "@langchain/core/prompts";
@@ -10,21 +10,16 @@ import {ChatPromptTemplate} from "@langchain/core/prompts";
 // AutoGPT doesn't support Gemini yet
 
 const store = new InMemoryFileStore();
-const tools = [searchTool, new ReadFileTool({store}), new WriteFileTool({store})];
+const tools = [searchTool, webBrowser, new ReadFileTool({store}), new WriteFileTool({store})];
 const vectorStore = new MemoryVectorStore(gpt_embedding)
 
-export const autoGpt = AutoGPT.fromLLMAndTools(
-    gpt4,
-    tools,
-    {memory: vectorStore.asRetriever(), aiName: "Gemini", aiRole: "Assistant"}
-)
+export const autoGpt = AutoGPT.fromLLMAndTools(gpt4, tools, {
+    memory: vectorStore.asRetriever(),
+    aiName: "Gemini",
+    aiRole: "Assistant"
+})
 
-const prompt = ChatPromptTemplate.fromMessages([
-    ["system", "You are a helpful assistant"],
-    ["placeholder", "{chat_history}"],
-    ["human", "{input}"],
-    ["placeholder", "{agent_scratchpad}"],
-]);
+const prompt = ChatPromptTemplate.fromMessages([["system", "You are a helpful assistant"], ["placeholder", "{chat_history}"], ["human", "{input}"], ["placeholder", "{agent_scratchpad}"],]);
 
 // AgentExecutor doesn't support Gemini yet cause Gemini doesn't have "bind_tools()" method.
 
@@ -36,8 +31,6 @@ const prompt = ChatPromptTemplate.fromMessages([
 // export const geminiExecutor = new AgentExecutor({agent: geminiAgent, tools})
 
 const gpt4Agent = createToolCallingAgent({
-    llm: gpt4,
-    tools,
-    prompt,
+    llm: gpt4, tools, prompt,
 });
 export const gpt4Executor = new AgentExecutor({agent: gpt4Agent, tools})
