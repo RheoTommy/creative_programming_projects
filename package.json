@@ -19,6 +19,10 @@
     "@langchain/google-genai": "^0.0.12",
     "@langchain/google-vertexai": "^0.0.14",
     "@langchain/openai": "^0.0.28",
+    "@types/axios": "^0.14.0",
+    "@types/cheerio": "^0.22.35",
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
     "duck-duck-scrape": "^2.2.5",
     "js-yaml": "^4.1.0",
     "langchain": "^0.1.36"
