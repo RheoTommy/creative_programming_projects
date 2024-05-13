@@ -12,3 +12,11 @@ export const loadTaskList = () => {
     const data: TaskData = yaml.load(f) as TaskData;
     return data;
 }
+
+export const flattenTaskList = (taskList: TaskData) => {
+    return [
+        ...taskList.simplest_questions.map((t,i) => ({task: t, taskType: "simplest_question", index: i})),
+        ...taskList.single_task.map((t,i) => ({task: t, taskType: "single_task", index: i})),
+        ...taskList.complex_task.map((t,i) => ({task: t, taskType: "complex_task", index: i})),
+    ]
+}
