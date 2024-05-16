@@ -14,22 +14,22 @@
     "test": "jest"
   },
   "dependencies": {
-    "@langchain/community": "^0.0.55",
-    "@langchain/core": "^0.1.62",
-    "@langchain/google-genai": "^0.0.12",
-    "@langchain/google-vertexai": "^0.0.14",
-    "@langchain/openai": "^0.0.28",
+    "@langchain/community": "^0.0.57",
+    "@langchain/core": "^0.1.63",
+    "@langchain/google-genai": "^0.0.13",
+    "@langchain/google-vertexai": "^0.0.15",
+    "@langchain/openai": "^0.0.31",
     "@types/axios": "^0.14.0",
     "@types/cheerio": "^0.22.35",
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "duck-duck-scrape": "^2.2.5",
     "js-yaml": "^4.1.0",
-    "langchain": "^0.1.36"
+    "langchain": "^0.1.37"
   },
   "devDependencies": {
     "@types/js-yaml": "~4.0.9",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "typescript": "^5.4.5",
     "typesync": "^0.12.1"
   }

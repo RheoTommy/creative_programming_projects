@@ -1,4 +1,4 @@
-import {gemini, gpt4, gpt_embedding} from "./models.js";
+import {geminiEmbedding, geminiFlash, geminiPro, gpt4, gptEmbedding} from "./models.js";
 import {executeComparison, streamToConsole} from "./utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool, webBrowser} from "./tools.js";
@@ -9,26 +9,32 @@ import {readFileSync} from "fs";
 import {resToMdFile} from "./outputViewer.js";
 
 const callingModels = async () => {
-    const res_gpt = await gpt4.invoke("Hello, how are you?");
-    console.log(res_gpt);
+    const resGpt = await gpt4.invoke("Hello, how are you?");
+    console.log(resGpt);
 
-    const res_gemini = await gpt4.invoke("Hello, how are you?");
-    console.log(res_gemini);
+    const resGeminiPro = await geminiPro.invoke("Hello, how are you?");
+    console.log(resGeminiPro);
+
+    const resGeminiFlash = await geminiFlash.invoke("Hello, how are you?")
+    console.log(resGeminiFlash)
 }
 
 const streamingModels = async () => {
-    const res_gpt = await gpt4.pipe(new StringOutputParser()).stream("Hello, how are you?");
-    await streamToConsole(res_gpt);
+    const resGpt = await gpt4.pipe(new StringOutputParser()).stream("Hello, how are you?");
+    await streamToConsole(resGpt);
 
-    const res_gemini = await gemini.pipe(new StringOutputParser()).stream("Hello, how are you?");
-    await streamToConsole(res_gemini);
+    const resGeminiPro = await geminiPro.pipe(new StringOutputParser()).stream("Hello, how are you?");
+    await streamToConsole(resGeminiPro);
+
+    const resGeminiFlash = await geminiFlash.pipe(new StringOutputParser()).stream("Hello, how are you?");
+    await streamToConsole(resGeminiFlash)
 }
 
 const callingEmbeddings = async () => {
-    const res = await gpt_embedding.embedQuery("Hello, how are you?");
+    const res = await gptEmbedding.embedQuery("Hello, how are you?");
     console.log(res);
 
-    const res2 = await gpt_embedding.embedQuery("Hello, how are you?");
+    const res2 = await geminiEmbedding.embedQuery("Hello, how are you?");
     console.log(res2);
 }
 
@@ -56,12 +62,16 @@ const runAutoGpt = async () => {
 const runComparison = async () => {
     // TODO: can't get logs from AutoGPT.run()
     const agents = [{
-        agent: (question: string) => gemini.pipe(new StringOutputParser()).invoke(question), agentName: "Gemini-1.5-Pro"
+        agent: (question: string) => geminiPro.pipe(new StringOutputParser()).invoke(question),
+        agentName: "Gemini-1.5-Pro"
     }, {
-        agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4-Turbo"
+        agent: (question: string) => geminiFlash.pipe(new StringOutputParser()).invoke(question),
+        agentName: "Gemini-1.5-Flash"
+    }, {
+        agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4o"
     }, {
         agent: async (question: string) => (await gpt4Executor.invoke({input: question}))["output"] as string,
-        agentName: "GPT-4-Turbo-Executor"
+        agentName: "GPT-4o-Executor"
     }];
 
     const res = await executeComparison(agents, true);
@@ -85,5 +95,5 @@ export const createMdFiles = async () => {
 // await webBrowse();
 // printTaskList()
 // await runAutoGpt()
-await runComparison()
-await createMdFiles()
+// await runComparison()
+// await createMdFiles()

@@ -2,16 +2,20 @@ import {ChatOpenAI, OpenAIEmbeddings} from "@langchain/openai";
 import {ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings} from "@langchain/google-genai";
 
 export const gpt4 = new ChatOpenAI({
-    temperature: 0.6, model: "gpt-4-turbo-2024-04-09"
+    temperature: 0.6, model: "gpt-4o"
 })
 
-export const gemini = new ChatGoogleGenerativeAI({
+export const geminiPro = new ChatGoogleGenerativeAI({
     temperature: 0.6, model: "gemini-1.5-pro-latest",
 })
 
-export const gpt_embedding = new OpenAIEmbeddings();
+export const geminiFlash = new ChatGoogleGenerativeAI({
+    temperature: 0.6, model: "gemini-1.5-flash-latest"
+})
 
-export const gemini_embedding = new GoogleGenerativeAIEmbeddings({
+export const gptEmbedding = new OpenAIEmbeddings();
+
+export const geminiEmbedding = new GoogleGenerativeAIEmbeddings({
     model: "models/embedding-001",
 });
 
