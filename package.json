@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "preinstall": "typesync || :",
-    "test": "jest"
+    "test": "vitest"
   },
   "dependencies": {
     "@langchain/community": "^0.0.57",
@@ -31,6 +31,7 @@
     "@types/js-yaml": "~4.0.9",
     "@types/node": "^20.12.12",
     "typescript": "^5.4.5",
-    "typesync": "^0.12.1"
+    "typesync": "^0.12.1",
+    "vitest": "^1.6.0"
   }
 }
