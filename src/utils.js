@@ -23,13 +23,13 @@ export const executeComparison = async (agents, autoSave = true) => {
         .map(async ({ t, a }) => {
         const res = await executeTask(t, a);
         if (autoSave) {
-            appendFileSync("./out.json", JSON.stringify(res) + ",\n");
+            appendFileSync("./out/autoSave.json", JSON.stringify(res) + ",\n");
         }
         return res;
     });
     return await Promise.all(runs);
 };
-const runComparison = async () => {
+export const runComparison = async () => {
     // TODO: can't get logs from AutoGPT.run()
     const agents = [{
             agent: (question) => geminiPro.pipe(new StringOutputParser()).invoke(question),
@@ -44,6 +44,6 @@ const runComparison = async () => {
             agentName: "GPT-4o-Executor"
         }];
     const res = await executeComparison(agents, true);
-    writeFileSync("./comparison.json", JSON.stringify(res, null, 2));
+    writeFileSync("./out/comparison.json", JSON.stringify(res, null, 2));
 };
 //# sourceMappingURL=utils.js.map
