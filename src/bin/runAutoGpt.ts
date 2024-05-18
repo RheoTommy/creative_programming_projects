@@ -1,8 +1,12 @@
-import {flattenTaskList, loadTaskList} from "../loadTaskList.js";
 import {autoGpt} from "../agents.js";
 
-const taskList = flattenTaskList(loadTaskList());
+const task = process.argv[2];
 
-const res = await autoGpt.run([taskList[0]!.task])
+if (!task) {
+    console.error("Please provide a task to run");
+    process.exit(1);
+}
 
-console.log(res)
+const res = await autoGpt.run([task]);
+
+console.error(res)

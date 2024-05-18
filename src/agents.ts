@@ -11,9 +11,7 @@ const tools = [searchTool, webBrowser];
 const vectorStore = new MemoryVectorStore(gptEmbedding)
 
 export const autoGpt = AutoGPT.fromLLMAndTools(gpt4, tools, {
-    memory: vectorStore.asRetriever(),
-    aiName: "GPT",
-    aiRole: "Assistant"
+    memory: vectorStore.asRetriever(), aiName: "GPT", aiRole: "Assistant", maxIterations: 10,
 })
 
 const prompt = ChatPromptTemplate.fromMessages([["system", "You are a helpful assistant"], ["placeholder", "{chat_history}"], ["human", "{input}"], ["placeholder", "{agent_scratchpad}"],]);
