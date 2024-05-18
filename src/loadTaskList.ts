@@ -6,7 +6,7 @@ export type TaskData = {
 }
 
 export const loadTaskList = () => {
-    const f = fs.readFileSync("../taskList.yaml", "utf-8");
+    const f = fs.readFileSync("./taskList.yaml", "utf-8");
     const data: TaskData = yaml.load(f) as TaskData;
     return data;
 }

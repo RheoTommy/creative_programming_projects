@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import yaml from "js-yaml";
 export const loadTaskList = () => {
-    const f = fs.readFileSync("../taskList.yaml", "utf-8");
+    const f = fs.readFileSync("./taskList.yaml", "utf-8");
     const data = yaml.load(f);
     return data;
 };

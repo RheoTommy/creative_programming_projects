@@ -34,7 +34,7 @@ export const executeComparison = async (agents: ({
         .map(async ({t, a}) => {
             const res = await executeTask(t, a)
             if (autoSave) {
-                appendFileSync("../out.json", JSON.stringify(res) + ",\n")
+                appendFileSync("./out.json", JSON.stringify(res) + ",\n")
             }
             return res;
         });
@@ -58,5 +58,5 @@ const runComparison = async () => {
 
     const res = await executeComparison(agents, true);
 
-    writeFileSync("../comparison.json", JSON.stringify(res, null, 2));
+    writeFileSync("./comparison.json", JSON.stringify(res, null, 2));
 }
