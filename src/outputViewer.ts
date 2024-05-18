@@ -1,4 +1,5 @@
 import {writeFileSync} from "node:fs";
+import {readFileSync} from "fs";
 
 const resToMdStr = (res: {
     task: string; taskType: string; index: number; agentName: string; res: string;
@@ -19,4 +20,13 @@ export const resToMdFile = (res: {
 }) => {
     const str = resToMdStr(res);
     writeFileSync(`../md/${res.taskType}-${res.index}-${res.agentName}.md`, str);
+}
+
+export const createMdFiles = async () => {
+    const fs = readFileSync("../comparison.json", "utf-8");
+    const data: {
+        task: string; taskType: string; index: number; agentName: string; res: string;
+    }[] = JSON.parse(fs);
+
+    data.forEach(res => resToMdFile(res));
 }

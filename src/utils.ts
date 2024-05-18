@@ -1,6 +1,9 @@
 import {IterableReadableStream} from "@langchain/core/utils/stream";
 import {flattenTaskList, loadTaskList} from "./loadTaskList.js";
-import {appendFileSync} from "node:fs";
+import {appendFileSync, writeFileSync} from "node:fs";
+import {geminiFlash, geminiPro, gpt4} from "./models.js";
+import {StringOutputParser} from "@langchain/core/output_parsers";
+import {gpt4Executor} from "./agents.js";
 
 export const streamToConsole = async <T>(stream: IterableReadableStream<T>) => {
     for await (const chunk of stream) {
@@ -36,4 +39,24 @@ export const executeComparison = async (agents: ({
             return res;
         });
     return await Promise.all(runs);
+}
+
+const runComparison = async () => {
+    // TODO: can't get logs from AutoGPT.run()
+    const agents = [{
+        agent: (question: string) => geminiPro.pipe(new StringOutputParser()).invoke(question),
+        agentName: "Gemini-1.5-Pro"
+    }, {
+        agent: (question: string) => geminiFlash.pipe(new StringOutputParser()).invoke(question),
+        agentName: "Gemini-1.5-Flash"
+    }, {
+        agent: (question: string) => gpt4.pipe(new StringOutputParser()).invoke(question), agentName: "GPT-4o"
+    }, {
+        agent: async (question: string) => (await gpt4Executor.invoke({input: question}))["output"] as string,
+        agentName: "GPT-4o-Executor"
+    }];
+
+    const res = await executeComparison(agents, true);
+
+    writeFileSync("../comparison.json", JSON.stringify(res, null, 2));
 }
