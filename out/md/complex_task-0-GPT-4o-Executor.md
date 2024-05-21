@@ -7,7 +7,6 @@
 
 # Response
 
-```markdown
 # Comparison of Top 5 Liked Programming Languages in 2023
 
 This document provides a comparison of the top 5 liked programming languages in 2023 according to the StackOverflow survey. The languages compared are Python, JavaScript, TypeScript, Rust, and C#. Each language's features are summarized based on information from their official websites.
@@ -110,5 +109,4 @@ This document provides a comparison of the top 5 liked programming languages in 
 - [ASP.NET Core Tutorials](https://learn.microsoft.com/en-us/aspnet/core/tutorials)
 - [Build Custom AI Solutions with ML.NET](https://learn.microsoft.com/en-us/machine-learning/)
 - [.NET API Reference](https://learn.microsoft.com/en-us/api/?view=net-8.0)
-```
 
