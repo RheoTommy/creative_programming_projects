@@ -14,18 +14,17 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@langchain/community": "^0.0.57",
-    "@langchain/core": "^0.1.63",
-    "@langchain/google-genai": "^0.0.13",
-    "@langchain/google-vertexai": "^0.0.15",
-    "@langchain/openai": "^0.0.31",
-    "@types/axios": "^0.14.0",
+    "@langchain/community": "^0.2.1",
+    "@langchain/core": "^0.2.0",
+    "@langchain/google-genai": "^0.0.15",
+    "@langchain/google-vertexai": "^0.0.16",
+    "@langchain/openai": "^0.0.33",
     "@types/cheerio": "^0.22.35",
-    "axios": "^1.6.8",
+    "axios": "^1.7.1",
     "cheerio": "^1.0.0-rc.12",
     "duck-duck-scrape": "^2.2.5",
     "js-yaml": "^4.1.0",
-    "langchain": "^0.1.37"
+    "langchain": "^0.2.0"
   },
   "devDependencies": {
     "@types/js-yaml": "~4.0.9",
