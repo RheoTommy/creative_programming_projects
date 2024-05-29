@@ -39,7 +39,7 @@
 ### single_task
 
 - 出力は悪くない
-- 50sほどで襲い
+- 50sほどで遅い
 - [LangSmith](https://smith.langchain.com/public/7626c0d5-dadc-48ba-80aa-6fb67d892fd8/r)見るとちょっと無駄が多い？
 
 ### complex_task
