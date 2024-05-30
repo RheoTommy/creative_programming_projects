@@ -1,3 +1,3 @@
 import {runComparison} from "../utils.js";
 
-await runComparison();
+await runComparison(false);

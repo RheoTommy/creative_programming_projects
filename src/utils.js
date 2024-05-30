@@ -1,36 +1,38 @@
 import { flattenTaskList, loadTaskList } from "./loadTaskList.js";
-import { appendFileSync, writeFileSync } from "node:fs";
+import * as fs from "node:fs";
+import { writeFileSync } from "node:fs";
 import { geminiFlash, geminiPro, gpt4 } from "./models.js";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { gpt4Executor } from "./agents.js";
+import { writeResAsMd } from "./outputViewer.js";
 export const streamToConsole = async (stream) => {
     for await (const chunk of stream) {
         process.stdout.write(`${chunk}`);
     }
     console.log("");
 };
-// TODO: define a func that executes a list of tasks with each agent and saves the results in a file
 export const executeTask = async (t, a) => {
     const res = await a.agent(t.task);
     return {
         ...t, ...a, res,
     };
 };
-export const executeComparison = async (agents, autoSave = true) => {
+export const executeComparison = async (agents, override) => {
     const tasks = flattenTaskList(loadTaskList());
     const runs = tasks.map(t => agents.map(a => ({ t, a })))
         .flat()
         .map(async ({ t, a }) => {
-        const res = await executeTask(t, a);
-        if (autoSave) {
-            appendFileSync("./out/autoSave.json", JSON.stringify(res) + ",\n");
+        const file = `./out/json/${t.taskType}-${t.index}-${a.agentName}.json`;
+        if (!override && fs.existsSync(file)) {
+            return;
         }
-        return res;
+        const res = await executeTask(t, a);
+        writeFileSync(file, JSON.stringify(res, null, 2));
+        writeResAsMd(res);
     });
-    return await Promise.all(runs);
+    await Promise.all(runs);
 };
-export const runComparison = async () => {
-    // TODO: can't get logs from AutoGPT.run()
+export const runComparison = async (override = false) => {
     const agents = [{
             agent: (question) => geminiPro.pipe(new StringOutputParser()).invoke(question),
             agentName: "Gemini-1.5-Pro"
@@ -43,7 +45,6 @@ export const runComparison = async () => {
             agent: async (question) => (await gpt4Executor.invoke({ input: question }))["output"],
             agentName: "GPT-4o-Executor"
         }];
-    const res = await executeComparison(agents, true);
-    writeFileSync("./out/comparison.json", JSON.stringify(res, null, 2));
+    await executeComparison(agents, override);
 };
 //# sourceMappingURL=utils.js.map

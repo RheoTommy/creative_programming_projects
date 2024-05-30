@@ -7,172 +7,177 @@
 
 # Response
 
-## Best Practices for Developing Applications in FP Style
+## Best Practices for Developing Applications in FP Style:
 
-Functional Programming (FP) emphasizes immutability, pure functions, and declarative programming. Here are some best practices for developing applications in FP style:
+Functional programming (FP) emphasizes immutability, pure functions, and declarative programming. Here are some best practices for developing applications with FP:
 
-**1. Immutability:**
+**1. Embrace Immutability:**
 
-* **Avoid mutable state:** Instead of modifying existing data, create new data structures with the desired changes. This prevents unintended side effects and makes code easier to reason about.
-* **Use immutable data structures:** Languages like Haskell have built-in immutable data structures. In TypeScript, libraries like Immutable.js can be used.
+* **Concept:** Avoid changing data in place. Instead, create new data structures with the desired modifications. This enhances predictability and simplifies debugging.
+* **Benefits:** Easier reasoning about code, thread safety, and reduced side effects.
 
-**Example:**
-
-**TypeScript (with Immutable.js):**
+**TypeScript Example:**
 
 ```typescript
-import { Map } from 'immutable';
+// Instead of modifying an array in place:
+const numbers = [1, 2, 3];
+numbers.push(4); // Mutation
 
-let state = Map({ count: 0 });
-let newState = state.set('count', state.get('count') + 1);
-
-console.log(state.get('count')); // 0
-console.log(newState.get('count')); // 1
+// Create a new array with the added element:
+const newNumbers = [...numbers, 4]; // Immutability
 ```
 
-**Haskell:**
+**Haskell Example:**
 
 ```haskell
-import Data.Map (Map)
-import qualified Data.Map as Map
-
-let state = Map.fromList [("count", 0)]
-    newState = Map.insert "count" (Map.findWithDefault 0 "count" state + 1) state
-
-print $ Map.lookup "count" state -- Just 0
-print $ Map.lookup "count" newState -- Just 1
+-- Haskell enforces immutability by default
+numbers = [1, 2, 3]
+newNumbers = numbers ++ [4] -- Creates a new list with the added element
 ```
 
-**2. Pure Functions:**
+**2. Prioritize Pure Functions:**
 
-* **Functions should only depend on their input parameters:** This ensures consistent output for a given input, making functions easier to test and debug.
-* **Avoid side effects:** Side effects like modifying global variables or performing I/O should be handled separately.
+* **Concept:** Functions should always produce the same output for the same input and have no side effects (like modifying global state or performing I/O).
+* **Benefits:**  Testability, reusability, and composability.
 
-**Example:**
-
-**TypeScript:**
+**TypeScript Example:**
 
 ```typescript
+// Impure function with side effect
+let counter = 0;
+function increment() {
+  counter++;
+  return counter;
+}
+
+// Pure function
 function add(a: number, b: number): number {
-  return a + b; // Pure function: only depends on input, no side effects
+  return a + b; 
 }
 ```
 
-**Haskell:**
+**Haskell Example:**
 
 ```haskell
+-- Haskell encourages pure functions
+increment :: Int -> Int
+increment x = x + 1
+
 add :: Int -> Int -> Int
-add a b = a + b -- Pure function
+add x y = x + y
 ```
 
-**3. Declarative Programming:**
+**3. Utilize Higher-Order Functions:**
 
-* **Focus on what you want to achieve, not how:** Describe the desired result instead of outlining step-by-step instructions.
-* **Use higher-order functions:** Functions like `map`, `filter`, and `reduce` allow for concise and expressive data manipulation.
+* **Concept:** Functions can take other functions as arguments or return them as results.
+* **Benefits:** Abstraction, code reusability, and expressiveness.
 
-**Example:**
-
-**TypeScript:**
+**TypeScript Example:**
 
 ```typescript
 const numbers = [1, 2, 3, 4];
-const evenNumbers = numbers.filter(n => n % 2 === 0); // Declarative: filter for even numbers
 
-console.log(evenNumbers); // [2, 4]
+// Using map (higher-order function) to double each element
+const doubled = numbers.map((n) => n * 2); 
 ```
 
-**Haskell:**
+**Haskell Example:**
 
 ```haskell
-let numbers = [1, 2, 3, 4]
-    evenNumbers = filter even numbers -- Declarative: filter for even numbers
+numbers = [1, 2, 3, 4]
 
-print evenNumbers -- [2,4]
+-- Using map (higher-order function) to double each element
+doubled = map (* 2) numbers 
 ```
 
-**4. Composition:**
+**4. Model with Algebraic Data Types (ADTs):**
 
-* **Build complex logic by combining smaller, reusable functions:** This promotes modularity and code reuse.
-* **Use function composition operators:** Languages like Haskell provide operators like `.` for composing functions.
+* **Concept:** Define data types that explicitly represent possible states and variations.
+* **Benefits:** Improved type safety, reduced errors, and enhanced code clarity.
 
-**Example:**
-
-**TypeScript:**
+**TypeScript Example:**
 
 ```typescript
-const addOne = (n: number) => n + 1;
-const double = (n: number) => n * 2;
+type Shape = 
+  | { kind: "circle", radius: number } 
+  | { kind: "rectangle", width: number, height: number };
 
-const addOneAndDouble = (n: number) => double(addOne(n)); // Function composition
-
-console.log(addOneAndDouble(5)); // 12
-```
-
-**Haskell:**
-
-```haskell
-addOne :: Int -> Int
-addOne n = n + 1
-
-double :: Int -> Int
-double n = n * 2
-
-addOneAndDouble :: Int -> Int
-addOneAndDouble = double . addOne -- Function composition using '.'
-
-print $ addOneAndDouble 5 -- 12
-```
-
-**5. Error Handling:**
-
-* **Use algebraic data types (ADTs) to represent possible outcomes:** This allows for explicit error handling and avoids throwing exceptions.
-* **Utilize pattern matching to handle different cases:** This makes error handling more readable and robust.
-
-**Example:**
-
-**TypeScript (using discriminated unions):**
-
-```typescript
-type Result<T> = { success: true, value: T } | { success: false, error: string };
-
-function divide(a: number, b: number): Result<number> {
-  if (b === 0) {
-    return { success: false, error: "Cannot divide by zero" };
-  } else {
-    return { success: true, value: a / b };
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle": return Math.PI * shape.radius ** 2;
+    case "rectangle": return shape.width * shape.height;
   }
 }
+```
 
-const result = divide(10, 2);
+**Haskell Example:**
 
-if (result.success) {
-  console.log(result.value); // 5
-} else {
-  console.log(result.error);
+```haskell
+data Shape = Circle Float  -- radius
+           | Rectangle Float Float  -- width, height
+
+area :: Shape -> Float
+area (Circle r) = pi * r * r
+area (Rectangle w h) = w * h
+```
+
+**5. Leverage Recursion:**
+
+* **Concept:** Solve problems by breaking them down into smaller, self-similar subproblems.
+* **Benefits:** Elegant solutions for tasks like tree traversal and list processing.
+
+**TypeScript Example:**
+
+```typescript
+function factorial(n: number): number {
+  if (n === 0) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
 }
 ```
 
-**Haskell (using Maybe):**
+**Haskell Example:**
 
 ```haskell
-import Data.Maybe
-
-divide :: Int -> Int -> Maybe Int
-divide a b
-  | b == 0 = Nothing
-  | otherwise = Just (a `div` b)
-
-case divide 10 2 of
-  Just result -> print result -- 5
-  Nothing -> print "Cannot divide by zero"
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
 ```
 
-**Sources:**
+**6. Manage Side Effects Carefully:**
 
-* [Haskell Wiki: Functional Programming](https://wiki.haskell.org/Functional_programming)
-* [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/)
-* [Professor Frisby's Mostly Adequate Guide to Functional Programming](https://mostly-adequate.gitbook.io/mostly-adequate-guide/)
-* [Immutable.js Documentation](https://immutable-js.github.io/immutable-js/)
+* **Concept:** Isolate and manage side effects (like I/O) to maintain the purity of the core logic.
+* **Benefits:** Improved testability, predictability, and easier reasoning about code.
 
-These are just some of the best practices for developing applications in FP style. The specific techniques and tools used will vary depending on the chosen language and project requirements. However, adhering to these principles can lead to more robust, maintainable, and scalable applications.
+**TypeScript Example:**
+
+```typescript
+// Using async/await to handle side effects
+async function fetchData(url: string): Promise<string> {
+  const response = await fetch(url);
+  return await response.text();
+}
+```
+
+**Haskell Example:**
+
+```haskell
+-- Using the IO monad to handle side effects
+import Control.Monad.IO.Class (liftIO)
+
+fetchData :: String -> IO String
+fetchData url = do
+  response <- liftIO $ fetch url
+  liftIO $ responseBody response
+```
+
+**Resources:**
+
+* [Professor Frisby's Mostly Adequate Guide to Functional Programming](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/)
+* [Real World Haskell](http://book.realworldhaskell.org/)
+* [Haskell Programming from First Principles](https://haskellbook.com/) 
+
+Remember that adopting FP is a journey. Start by incorporating these best practices gradually and experiment to find what works best for your projects. 
 

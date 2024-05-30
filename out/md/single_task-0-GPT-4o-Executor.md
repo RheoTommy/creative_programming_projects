@@ -7,71 +7,45 @@
 
 # Response
 
-### Best Practices for Developing an Application in Functional Programming (FP) Style
+### Best Practices for Developing an Application in Functional Programming Style
 
-Functional Programming (FP) is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data. Here are some best practices for developing an application in FP style:
+Functional programming (FP) emphasizes the evaluation of expressions rather than the execution of commands. Here are some best practices for developing an application in FP style:
 
-1. **Immutability**:
-   - Use immutable data structures.
-   - Avoid changing state or mutable data to ensure predictability and easier debugging.
+1. **Immutability**: Avoid changing state or mutable data. Instead, use immutable data structures and return new copies of data when changes are needed.
+2. **Pure Functions**: Ensure functions are pure, meaning they don't have side effects and return the same output for the same input.
+3. **First-Class and Higher-Order Functions**: Treat functions as first-class citizens by passing them as arguments, returning them from other functions, and using higher-order functions to create more abstract, reusable code.
+4. **Function Composition**: Combine simple functions to build more complex functions, enhancing modularity and readability.
+5. **Declarative Code**: Write code that describes what to do rather than how to do it, making use of expressions and avoiding imperative constructs.
+6. **Recursion Over Looping**: Use recursion instead of loops for iteration, as it aligns better with the FP paradigm.
+7. **Lazy Evaluation**: Evaluate expressions only when their values are needed, which can improve performance and work with infinite data structures.
+8. **Type Safety**: Use strong, static types to catch errors at compile time. This is especially beneficial in languages like Haskell and TypeScript.
 
-2. **Pure Functions**:
-   - Ensure that functions have no side effects and return the same output for the same input.
-   - Pure functions make your code more predictable and easier to test.
+### TypeScript Examples for Functional Programming
 
-3. **First-Class and Higher-Order Functions**:
-   - Treat functions as first-class citizens: pass them as arguments, return them from other functions, and assign them to variables.
-   - Use higher-order functions to abstract common patterns of computation.
-
-4. **Function Composition**:
-   - Build complex operations by combining simpler functions.
-   - Use function composition to create pipelines of operations.
-
-5. **Declarative Code**:
-   - Focus on what to solve rather than how to solve it.
-   - Use expressions instead of statements wherever possible.
-
-6. **Referential Transparency**:
-   - Ensure that expressions can be replaced with their corresponding values without changing the program's behavior.
-   - This property makes reasoning about code easier.
-
-7. **Recursion**:
-   - Use recursion instead of loops for iteration.
-   - Tail recursion optimization can help prevent stack overflow issues.
-
-8. **Currying and Partial Application**:
-   - Use currying to transform functions that take multiple arguments into a series of functions that each take a single argument.
-   - Apply partial application to fix a few arguments of a function and generate a new function.
-
-9. **Monad and Functors**:
-   - Use monads and functors for handling side effects such as IO, state, or asynchronous operations.
-   - They help in maintaining functional purity while dealing with side effects.
-
-### Examples of Functional Programming in TypeScript and Haskell
-
-#### TypeScript Example
+Here's a simple example of functional programming in TypeScript:
 
 ```typescript
 // Pure function
 const add = (a: number, b: number): number => a + b;
 
 // Higher-order function
-const map = <T, U>(fn: (x: T) => U, arr: T[]): U[] => arr.map(fn);
+const applyOperation = (x: number, y: number, operation: (a: number, b: number) => number): number => {
+    return operation(x, y);
+};
 
-// Function composition
-const compose = <T>(...fns: ((x: T) => T)[]): (x: T) => T =>
-  fns.reduce((f, g) => x => f(g(x)));
+// Using the higher-order function
+const result = applyOperation(5, 3, add);
+console.log(result); // 8
 
-// Currying
-const multiply = (a: number) => (b: number): number => a * b;
-
-// Example usage
+// Immutability example
 const numbers = [1, 2, 3];
-const doubled = map(multiply(2), numbers);  // [2, 4, 6]
-console.log(doubled);
+const newNumbers = numbers.map(n => n * 2);
+console.log(newNumbers); // [2, 4, 6]
 ```
 
-#### Haskell Example
+### Haskell Examples for Functional Programming
+
+Here's a simple example of functional programming in Haskell:
 
 ```haskell
 -- Pure function
@@ -79,28 +53,30 @@ add :: Int -> Int -> Int
 add a b = a + b
 
 -- Higher-order function
-map' :: (a -> b) -> [a] -> [b]
-map' _ [] = []
-map' f (x:xs) = f x : map' f xs
+applyOperation :: (Int -> Int -> Int) -> Int -> Int -> Int
+applyOperation operation x y = operation x y
 
--- Function composition
-compose :: [(a -> a)] -> (a -> a)
-compose = foldr (.) id
-
--- Currying
-multiply :: Int -> (Int -> Int)
-multiply a b = a * b
-
--- Example usage
+-- Using the higher-order function
 main :: IO ()
 main = do
-  let numbers = [1, 2, 3]
-  let doubled = map' (multiply 2) numbers  -- [2, 4, 6]
-  print doubled
+    let result = applyOperation add 5 3
+    print result -- 8
+
+-- Immutability example
+doubleNumbers :: [Int] -> [Int]
+doubleNumbers numbers = map (*2) numbers
+
+main2 :: IO ()
+main2 = do
+    let numbers = [1, 2, 3]
+    let newNumbers = doubleNumbers numbers
+    print newNumbers -- [2, 4, 6]
 ```
 
 ### Sources
 
-1. [The Principles of Functional Programming - freeCodeCamp.org](https://www.freecodecamp.org/news/the-principles-of-functional-programming/)
-2. [Functional Programming 101 - GitHub](https://github.com/readme/guides/functional-programming-basics)
-3. [What is functional programming? A practical guide | InfoWorld](https://www.infoworld.com/article/3613715/what-is-functional-programming-a-practical-guide.html)
+1. [GeeksForGeeks - Introduction to Functional Programming](https://www.geeksforgeeks.org/introduction-to-functional-programming/)
+2. [TypeScript Documentation](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+3. [Haskell Wiki - Functional Programming](https://wiki.haskell.org/Functional_programming)
+
+These sources provide a comprehensive overview of functional programming concepts, best practices, and examples in both TypeScript and Haskell.
