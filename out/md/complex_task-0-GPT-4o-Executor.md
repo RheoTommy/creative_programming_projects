@@ -7,7 +7,7 @@
 
 # Response
 
-```markdown
+[//]: # (```markdown)
 # Comparison of the Top 5 Most Loved Programming Languages in 2023
 
 Based on the 2023 Stack Overflow Developer Survey, the top 5 most loved programming languages are:
@@ -119,5 +119,6 @@ Below is a comparison of these languages based on their features and use cases.
 - [Julia Programming Language](https://julialang.org/)
 - [Download Julia](https://julialang.org/downloads/)
 - [Learn Julia](https://julialang.org/learning/)
-```
+
+[//]: # (```)
 
