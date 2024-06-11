@@ -5,6 +5,10 @@ export const gpt4 = new ChatOpenAI({
     temperature: 0.6, model: "gpt-4o"
 })
 
+export const gpt4s = new ChatOpenAI({
+    temperature: 0.6, model: "gpt-4o", streaming: true,
+})
+
 export const geminiPro = new ChatGoogleGenerativeAI({
     temperature: 0.6, model: "gemini-1.5-pro-latest",
 })
