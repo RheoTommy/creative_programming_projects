@@ -9,14 +9,8 @@ export const gpt4s = new ChatOpenAI({
 export const geminiPro = new ChatGoogleGenerativeAI({
     temperature: 0.6, model: "gemini-1.5-pro-latest",
 });
-export const geminiProS = new ChatGoogleGenerativeAI({
-    temperature: 0.6, model: "gemini-1.5-pro-latest", streaming: true,
-});
 export const geminiFlash = new ChatGoogleGenerativeAI({
     temperature: 0.6, model: "gemini-1.5-flash-latest"
-});
-export const geminiFlashS = new ChatGoogleGenerativeAI({
-    temperature: 0.6, model: "gemini-1.5-flash-latest", streaming: true,
 });
 export const gptEmbedding = new OpenAIEmbeddings();
 export const geminiEmbedding = new GoogleGenerativeAIEmbeddings({
