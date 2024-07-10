@@ -1,4 +1,4 @@
-import {geminiEmbedding, geminiFlash, geminiPro, gpt4, gptEmbedding} from "../src/models.js";
+import {geminiEmbedding, geminiFlash, geminiPro, gpt4o, gptEmbedding} from "../src/models.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool, webBrowser} from "../src/tools.js";
 import {describe, it} from "vitest";
@@ -6,12 +6,12 @@ import {streamToArray} from "../src/utils.js";
 
 describe("Calling OpenAI Models", () => {
     it("Calling GPT-4o", async () => {
-        const resGpt = await gpt4.invoke("Hello, how are you?");
+        const resGpt = await gpt4o.invoke("Hello, how are you?");
         console.log(resGpt);
     })
 
     it("Streaming GPT-4o", async () => {
-        const resGpt = await gpt4.pipe(new StringOutputParser()).stream("Hello, how are you?");
+        const resGpt = await gpt4o.pipe(new StringOutputParser()).stream("Hello, how are you?");
         console.log(await streamToArray(resGpt));
     })
 
