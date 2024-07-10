@@ -1,9 +1,8 @@
 import {geminiEmbedding, geminiFlash, geminiPro, gpt4, gptEmbedding} from "../src/models.js";
-import {streamToConsole} from "../src/utils.js";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {searchTool, webBrowser} from "../src/tools.js";
-import {autoGpt} from "../src/agents.js";
 import {describe, it} from "vitest";
+import {streamToArray} from "../src/utils.js";
 
 describe("Calling OpenAI Models", () => {
     it("Calling GPT-4o", async () => {
@@ -13,7 +12,7 @@ describe("Calling OpenAI Models", () => {
 
     it("Streaming GPT-4o", async () => {
         const resGpt = await gpt4.pipe(new StringOutputParser()).stream("Hello, how are you?");
-        await streamToConsole(resGpt);
+        console.log(await streamToArray(resGpt));
     })
 
     it("Calling GPT-Embedding", async () => {
@@ -30,7 +29,7 @@ describe("Calling Gemini Models", () => {
 
     it("Streaming Gemini-1.5-Pro-latest", async () => {
         const resGeminiPro = await geminiPro.pipe(new StringOutputParser()).stream("Hello, how are you?");
-        await streamToConsole(resGeminiPro);
+        console.log(await streamToArray(resGeminiPro));
     })
 
     it("Calling Gemini-1.5-Flash-latest", async () => {
@@ -40,7 +39,7 @@ describe("Calling Gemini Models", () => {
 
     it("Streaming Gemini-1.5-Flash-latest", async () => {
         const resGeminiFlash = await geminiFlash.pipe(new StringOutputParser()).stream("Hello, how are you?");
-        await streamToConsole(resGeminiFlash)
+        console.log(await streamToArray(resGeminiFlash));
     })
 
     it("Calling Gemini-Embedding", async () => {
@@ -62,9 +61,3 @@ describe("Calling Tools", () => {
     }, 10000)
 })
 
-describe("Running Agents", () => {
-    it("Running AutoGPT", async () => {
-        const res = await autoGpt.run(["Hello, how are you?"]);
-        console.log(res)
-    })
-})
