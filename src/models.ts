@@ -1,7 +1,7 @@
 import {ChatOpenAI, OpenAIEmbeddings} from "@langchain/openai";
 import {ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings} from "@langchain/google-genai";
 
-export const gpt4 = new ChatOpenAI({
+export const gpt4o = new ChatOpenAI({
     temperature: 0.6, model: "gpt-4o"
 })
 
