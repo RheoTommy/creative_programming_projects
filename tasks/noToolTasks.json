@@ -1,0 +1,14 @@
+[
+  {
+    "question": "日本の首都は？（正確に）",
+    "expected": {
+      "answer": "東京都"
+    }
+  },
+  {
+    "question": "RustでStack上にデータが確保される型に実装すべきトレイト名は？",
+    "expected": {
+      "answer": "Copy"
+    }
+  }
+]

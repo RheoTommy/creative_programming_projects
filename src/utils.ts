@@ -26,3 +26,4 @@ export const rewriteWithSchema = async <T extends ZodRawShape>(
     const res = await model.invoke(prompt);
     return schema.parse(res);
 }
+
