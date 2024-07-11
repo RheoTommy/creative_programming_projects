@@ -25,7 +25,8 @@
     "cheerio": "^1.0.0-rc.12",
     "duck-duck-scrape": "^2.2.5",
     "js-yaml": "^4.1.0",
-    "langchain": "^0.2.5"
+    "langchain": "^0.2.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/js-yaml": "~4.0.9",
