@@ -14,23 +14,23 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@langchain/community": "^0.2.9",
-    "@langchain/core": "^0.2.6",
-    "@langchain/google-genai": "^0.0.17",
-    "@langchain/google-vertexai": "^0.0.18",
-    "@langchain/langgraph": "^0.0.22",
-    "@langchain/openai": "^0.1.2",
+    "@langchain/community": "^0.2.18",
+    "@langchain/core": "^0.2.15",
+    "@langchain/google-genai": "^0.0.21",
+    "@langchain/google-vertexai": "^0.0.19",
+    "@langchain/langgraph": "^0.0.26",
+    "@langchain/openai": "^0.2.1",
     "@types/cheerio": "^0.22.35",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
     "duck-duck-scrape": "^2.2.5",
     "js-yaml": "^4.1.0",
-    "langchain": "^0.2.5",
+    "langchain": "^0.2.9",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/js-yaml": "~4.0.9",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.10",
     "typescript": "^5.5.3",
     "typesync": "^0.12.2",
     "vitest": "^2.0.2"
