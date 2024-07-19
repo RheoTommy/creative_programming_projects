@@ -1,7 +1,10 @@
-import {DuckDuckGoSearch} from "@langchain/community/tools/duckduckgo_search";
-import {WebBrowser} from "langchain/tools/webbrowser";
-import {geminiPro, geminiEmbedding} from "./models.js";
+import { WebBrowser } from "langchain/tools/webbrowser";
+import { geminiEmbedding, geminiFlash } from "./models.js";
+import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 
-export const searchTool = new DuckDuckGoSearch();
+export const searchTool = new TavilySearchResults();
 
-export const webBrowser = new WebBrowser({model: geminiPro, embeddings: geminiEmbedding})
+export const webBrowser = new WebBrowser({
+    model: geminiFlash,
+    embeddings: geminiEmbedding,
+});
