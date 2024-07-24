@@ -8,3 +8,5 @@ export const webBrowser = new WebBrowser({
     model: geminiFlash,
     embeddings: geminiEmbedding,
 });
+
+export const tools = [searchTool, webBrowser];
