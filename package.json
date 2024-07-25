@@ -35,5 +35,8 @@
     "typescript": "^5.5.3",
     "typesync": "^0.12.2",
     "vitest": "^2.0.2"
+  },
+  "volta": {
+    "node": "22.5.1"
   }
 }
