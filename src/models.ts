@@ -10,7 +10,7 @@ export const gpt4o = new ChatOpenAI({
 });
 
 export const gpt4oMini = new ChatOpenAI({
-    temperature: 0.6,
+    temperature: 0.0,
     model: "gpt-4o-mini",
     streaming: true,
 });
@@ -21,7 +21,7 @@ export const geminiPro = new ChatGoogleGenerativeAI({
 });
 
 export const geminiFlash = new ChatGoogleGenerativeAI({
-    temperature: 0.6,
+    temperature: 0.0,
     model: "gemini-1.5-flash-latest",
 });
 
