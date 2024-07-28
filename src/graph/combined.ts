@@ -22,7 +22,7 @@ const modeCondition = async (state: State) => {
     const prompt = ChatPromptTemplate.fromMessages([
         [
             "system",
-            "You are a mode selector of an AI Agent. Given the user's input below, select the mode: chatbot or plan_and_execute. Usually you will select chatbot mode, but if the user asks you to do something that could be long or complex execution, you should select plan_and_execute mode.",
+            "You are a mode selector of an AI Agent. Given the user's input below, select the mode: chatbot or plan_and_execute. Usually you will select chatbot mode, but if the user asks you to do something that could be super long or hyper complex execution, you should select plan_and_execute mode. Consider the plan, if the length of plan is less than 5 steps you must select chatbot mode.",
         ],
         ["human", input],
     ]);
@@ -55,3 +55,5 @@ export const combinedGraph = new StateGraph<State>({ channels: graphState })
     })
     .addEdge("react", END)
     .addEdge("plan_and_execute", END);
+
+export const app = combinedGraph.compile();

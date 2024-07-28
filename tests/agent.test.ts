@@ -1,18 +1,22 @@
 // test だが一般的な形式を取らない
 
 import { describe, it } from "vitest";
-import { agent, defaultAgent } from "../src/graph/agent.js";
 import { HumanMessage } from "@langchain/core/messages";
 import { Runnable } from "@langchain/core/runnables";
+import { app } from "../src/graph/combined.js";
 
 const agents = [
+    // {
+    //     name: "myAgent",
+    //     agent: agent,
+    // },
+    // {
+    //     name: "defaultAgent",
+    //     agent: defaultAgent,
+    // },
     {
-        name: "myAgent",
-        agent: agent,
-    },
-    {
-        name: "defaultAgent",
-        agent: defaultAgent,
+        name: "combined",
+        agent: app,
     },
 ];
 const withQuestions = (questions: string[]) =>
@@ -21,9 +25,7 @@ const withQuestions = (questions: string[]) =>
     );
 
 const runQuery = async ({ q, agent }: { q: string; agent: Runnable }) => {
-    const res = await agent.invoke({
-        messages: new HumanMessage(q),
-    });
+    const res = await agent.invoke({ input: q });
     console.info(res);
 };
 
@@ -37,7 +39,7 @@ describe("Agent as a neutral LLM", () => {
 describe("Agent with a single tool call", () => {
     const questions = [
         "LangChainJSの公式ドキュメントのリンクを調べて。", // Tavily Search
-        "https://langchain-ai.github.io/langgraphjs/ を参照し、step-by-step breakdownを示して。", // WebBrowser
+        "https://langchain-ai.github.io/langgraphjs/ を参照し、key featuresを示して。", // WebBrowser
     ];
     const queries = withQuestions(questions);
 
@@ -69,6 +71,7 @@ describe("Agent with human interaction", () => {
 describe("Agent as a Long Task Executor", () => {
     const question = [
         "StackOverFlowの2024年度調査より、top likedなプログラミング言語を5つ調べ、各言語ごとに公式HPから最新のリリースノートを取得し一つのMarkdown記事にまとめよ。その後、各言語の実行速度の比較を行うため、適切な題材を調べ、すべての言語にて実装し、比較するためのシェルスクリプトを作成せよ。",
+        "LangChainにて高度なAgentを作成するにはどうするべきか、公式ドキュメントを参照し、かんたんな日本語の解説を書いてください。また、その後適当なアプリケーション例を考え、実装例も示してください。",
     ];
     const queries = withQuestions(question);
 
