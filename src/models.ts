@@ -5,7 +5,7 @@ import {
 } from "@langchain/google-genai";
 
 export const gpt4o = new ChatOpenAI({
-    temperature: 0.6,
+    temperature: 0.0,
     model: "gpt-4o",
 });
 
@@ -16,7 +16,7 @@ export const gpt4oMini = new ChatOpenAI({
 });
 
 export const geminiPro = new ChatGoogleGenerativeAI({
-    temperature: 0.6,
+    temperature: 0.0,
     model: "gemini-1.5-pro-latest",
 });
 

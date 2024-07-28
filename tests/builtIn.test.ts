@@ -7,7 +7,7 @@ import {
     gptEmbedding,
 } from "../src/models.js";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { searchTool, webBrowser } from "../src/tools.js";
+import { searchTool, webContentGetter } from "../src/tools.js";
 import { describe, it } from "vitest";
 import { streamToArray } from "../src/utils.js";
 
@@ -82,7 +82,7 @@ describe("Calling Tools", () => {
     it("Calling WebBrowse Tool", async () => {
         const url =
             "https://js.langchain.com/docs/integrations/tools/webbrowser";
-        const res = await webBrowser.invoke(url);
+        const res = await webContentGetter.invoke({ url });
         console.log(res);
     });
 });
