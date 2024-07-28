@@ -64,7 +64,6 @@ describe("Agent with human interaction", () => {
 
     // 高々数回の Tool Calling にて clarify node を用意せずとも、ReAct だけで十分では？
     // clarify node が必要なのは Long Task 特化のときのみでは？
-    // TODO: myAgent doesn't ask for human clarification on the second query (keep retrying)
 });
 
 describe("Agent as a Long Task Executor", () => {

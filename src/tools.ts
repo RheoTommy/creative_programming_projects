@@ -8,6 +8,8 @@ import { Document } from "@langchain/core/documents";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
+import { Readability } from "@mozilla/readability";
+import { convert } from "html-to-text";
 
 export const searchTool = new TavilySearchResults();
 
@@ -16,27 +18,21 @@ type WebContent = {
     source: string;
 };
 const getWebContent = async (url: string): Promise<WebContent> => {
-    const loader = new CheerioWebBaseLoader(url);
-    const docs = await loader.load();
-
-    const splitter = RecursiveCharacterTextSplitter.fromLanguage("html");
-    // const transformer = new MozillaReadabilityTransformer();
-    const transformer = new HtmlToTextTransformer();
-
-    const sequence = splitter.pipe(transformer);
-    const newDocuments = (await sequence.invoke(docs)) as Document[]; // TODO: type check
-
-    const source = newDocuments[0]?.metadata["source"] as string | undefined;
-    const content = newDocuments.reduce(
-        (acc, doc) => acc + doc.pageContent,
-        "",
-    );
-
-    if (source == undefined) {
-        throw new Error("Source not found");
+    const res = await fetch(url, {
+        headers: {
+            "User-Agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+        },
+    });
+    if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.statusText}`);
     }
+    const html = await res.text();
+    const text = convert(html);
 
-    return { content, source };
+    const content = text;
+
+    return { content, source: url };
 };
 
 export const webContentGetter = new DynamicStructuredTool({
@@ -44,8 +40,12 @@ export const webContentGetter = new DynamicStructuredTool({
     description: "Useful for getting full content from a web page.",
     schema: z.object({ url: z.string().url().describe("URL") }),
     func: async ({ url }: { url: string }): Promise<string> => {
-        const { content, source } = await getWebContent(url);
-        return `<WebContent source="${source}">\n\t${content}\n</WebContent>`;
+        try {
+            const { content, source } = await getWebContent(url);
+            return `<WebContent source="${source}">\n\t${content}\n</WebContent>`;
+        } catch (e) {
+            return JSON.stringify(e);
+        }
     },
 });
 
