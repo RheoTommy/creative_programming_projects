@@ -39,6 +39,9 @@ export const initReActGraph = (
         if (!lastMessage) throw new Error("No messages in state");
 
         if ("tool_calls" in lastMessage && lastMessage.tool_calls.length > 0) {
+            console.info(
+                `Tool calls: ${JSON.stringify(lastMessage.tool_calls)}`,
+            );
             return "tools";
         } else {
             return END;
