@@ -42,19 +42,15 @@ describe("Agent with a single tool call", () => {
     const queries = withQuestions(questions);
 
     it.each(queries)("Agent: $name, Question: $q", runQuery);
-
-    // TODO: return incorrect 'breakdown' because WebBrowser doesn't return full content
 });
 
 describe("Agent with multiple tool calls", () => {
     const questions = [
-        "Google GeminiをLangChainJSで呼び出す方法を調べ、教えて", // Tavily Search -> WebBrowser
+        "@Mozilla/ReadabilityをLangChainJSで用いる方法を公式ドキュメントで調べて、簡潔にまとめて", // Tavily Search -> WebBrowser
     ];
     const queries = withQuestions(questions);
 
     it.each(queries)("Agent: $name, Question: $q", runQuery);
-
-    // TODO: MyAgent(ReAct) doesn't call WebBrowser so that it doesn't return specific content
 });
 
 describe("Agent with human interaction", () => {

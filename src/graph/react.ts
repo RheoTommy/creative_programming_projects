@@ -50,7 +50,7 @@ export const initReActGraph = (
         const prompt = ChatPromptTemplate.fromMessages([
             [
                 "system",
-                "You are an AI Agent. Your final task is to respond to the user. Given the recent messages below, do what you have to do as a next step in order to complete your final task. You can use the tools to help you. When you respond to the user, your messages must be written in Japanese unless the user specifies otherwise. Your respond must be valid Markdown.",
+                "You are a chatbot. Please answer the user's question. You can use the tools to help you. When you respond to the user, your messages must be written in Japanese unless the user specifies otherwise. Your respond must be valid Markdown.",
             ],
             new MessagesPlaceholder("messages"),
         ]);
