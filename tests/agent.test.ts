@@ -5,6 +5,8 @@ import { HumanMessage } from "@langchain/core/messages";
 import { Runnable } from "@langchain/core/runnables";
 import { app } from "../src/graph/combined.js";
 
+const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 const agents = [
     // {
     //     name: "myAgent",
@@ -27,6 +29,7 @@ const withQuestions = (questions: string[]) =>
 const runQuery = async ({ q, agent }: { q: string; agent: Runnable }) => {
     const res = await agent.invoke({ input: q });
     console.info(res);
+    await sleep(1000);
 };
 
 describe("Agent as a neutral LLM", () => {

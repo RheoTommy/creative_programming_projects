@@ -31,6 +31,10 @@ import { combinedGraph } from "../graph/combined.js";
 
 const app = combinedGraph.compile();
 
+// await app.invoke({
+//     input: "LangChainにて高度なAgentを作成するにはどうするべきか、公式ドキュメントを参照し、かんたんな日本語の解説を書いてください。また、その後適当なアプリケーション例を考え、実装例も示してください。",
+// });
+
 await app.invoke({
-    input: "LangChainにて高度なAgentを作成するにはどうするべきか、公式ドキュメントを参照し、かんたんな日本語の解説を書いてください。また、その後適当なアプリケーション例を考え、実装例も示してください。",
+    input: "StackOverFlowの2024年度調査より、top likedなプログラミング言語を5つ調べ、各言語ごとに公式HPから最新のリリースノートを取得し一つのMarkdown記事にまとめよ。その後、各言語の実行速度の比較を行うため、適切な題材を調べ、すべての言語にて実装し、比較するためのシェルスクリプトを作成せよ。",
 });
